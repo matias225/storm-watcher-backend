@@ -40,6 +40,27 @@ app.post('/send-notification', async (req, res) => {
   }
 });
 
+// Enviar a varios dispositivos, reciendo un array de tokens y el mensaje
+app.post('/send-multiple-notifications', async (req, res) => {
+  try {
+    const registrationTokens = req.body.tokens;
+    const { title, body } = req.body.notification;
+    // Mensaje de la notificación push
+    const payload = {
+      notification: {
+        title: title,
+        body: body,
+      }
+    };
+    const response = await admin.messaging().sendToDevice(registrationTokens, payload);
+    res.status(200).send(`${response.successCount} messages sent`);
+  }
+  catch (error) {
+    console.log(error);
+    res.status(500).send('Error sending notifications');
+  }
+});
+
 // Escuchar peticiones
 app.listen(3050, () => {
   console.log('Servidor escuchando en puerto', 3050);
