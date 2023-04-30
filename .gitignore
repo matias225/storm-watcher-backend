@@ -1,0 +1,5 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+stormapp-2ff78-firebase-adminsdk-7lqiy-b7b5b69236.json
