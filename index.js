@@ -32,7 +32,8 @@ app.post('/send-notification', async (req, res) => {
       },
       token: token
     }
-    const response = await admin.messaging().send(message);
+    const response = await admin.messaging()
+      .send(message);
     res.status(200).send('Notification send successfully');
   } catch (error) {
     console.log(error);
@@ -44,15 +45,17 @@ app.post('/send-notification', async (req, res) => {
 app.post('/send-multiple-notifications', async (req, res) => {
   try {
     const registrationTokens = req.body.tokens;
-    const { title, body } = req.body.notification;
+    const { title, body } = req.body;
     // Mensaje de la notificación push
-    const payload = {
+    const message = {
       notification: {
         title: title,
         body: body,
-      }
+      },
+      tokens: registrationTokens
     };
-    const response = await admin.messaging().sendToDevice(registrationTokens, payload);
+    const response = await admin.messaging()
+      .sendEachForMulticast(message);
     res.status(200).send(`${response.successCount} messages sent`);
   }
   catch (error) {
@@ -62,6 +65,6 @@ app.post('/send-multiple-notifications', async (req, res) => {
 });
 
 // Escuchar peticiones
-app.listen(3050, () => {
-  console.log('Servidor escuchando en puerto', 3050);
+app.listen(8235, () => {
+  console.log('Servidor escuchando en puerto', 8235);
 });
