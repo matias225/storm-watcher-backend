@@ -1,12 +1,11 @@
-require('dotenv');
+require('dotenv').config();
 const express = require('express');
 const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 // Crear el sevidor de express
 const app = express();
-
-const serviceAccount = require('./stormapp-2ff78-firebase-adminsdk-7lqiy-b7b5b69236.json');
+const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_SDK);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
