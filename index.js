@@ -1,3 +1,4 @@
+require('dotenv');
 const express = require('express');
 const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
@@ -64,7 +65,8 @@ app.post('/send-multiple-notifications', async (req, res) => {
   }
 });
 
+
 // Escuchar peticiones
-app.listen(8235, () => {
-  console.log('Servidor escuchando en puerto', 8235);
+app.listen(process.env.PORT || 8236, () => {
+  console.log('Servidor escuchando en puerto', process.env.PORT || 8236);
 });
